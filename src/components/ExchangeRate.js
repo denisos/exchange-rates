@@ -1,31 +1,30 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RateTable } from "./RateTable";
 import { CurrencyCodePicker } from "./CurrencyCodePicker";
 import { AmountField } from "./AmountField";
-import { getExchangeRates } from "../api";
-
-const supportedCurrencies = ["USD", "EUR", "JPY", "CAD", "GBP", "MXN"];
+import { 
+  changeCurrencyCode,
+  getAmount, 
+  getCurrencyData, 
+  getCurrencyCode, 
+  supportedCurrencies 
+} from "../store/rates";
 
 export function ExchangeRate() {
-  const [amount, setAmount] = useState("1.50");
-  const [currencyCode, setCurrencyCode] = useState("USD");
-  const [currencyData, setCurrencyData] = useState({ USD: 1.0 });
+  const dispatch = useDispatch();
 
-  // fetch the exchange rates each time currency code changes
+  // useSelector takes a function and calls with state and allows you to 
+  //  return the part of state you want 
+  // useSelector reads a value from the store state and subscribes to updates
+  // any time these values change the component is re-rendered
+  const amount = useSelector(getAmount);
+  const currencyCode = useSelector(getCurrencyCode);
+  const currencyData = useSelector(getCurrencyData);
+
+  // fetch the exchange rates the first time
   useEffect(() => {
-    getExchangeRates(currencyCode, supportedCurrencies).then((rates) => {
-      setCurrencyData(rates);
-    });
-  }, [currencyCode]);
-
-  const handleCurrencyCode = useCallback(
-    (e) => setCurrencyCode(e.target.value),
-    []
-  );
-
-  const handleAmountChange = useCallback((e) => {
-    let newAmount = e.target.value;
-    setAmount(newAmount);
+    dispatch(changeCurrencyCode(currencyCode));
   }, []);
 
   return (
@@ -36,12 +35,11 @@ export function ExchangeRate() {
           <CurrencyCodePicker
             supportedCurrencies={supportedCurrencies}
             currencyCode={currencyCode}
-            onChange={handleCurrencyCode}
           />
         </h1>
       </section>
       <section>
-        <AmountField amount={amount} onChange={handleAmountChange} />
+        <AmountField amount={amount} />
       </section>
       <section>
         <RateTable currencyData={currencyData} amount={amount} />
