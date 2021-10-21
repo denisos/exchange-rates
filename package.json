@@ -36,5 +36,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "I built this following along [Jamund Fergusons egghead.io course on redux hooks](https://egghead.io/courses/apply-redux-to-a-modern-react-hooks-application-8a37). It's a free community resource (thanks Jamund! that is very kind of you)",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denisos/exchange-rates.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denisos/exchange-rates/issues"
+  },
+  "homepage": "https://github.com/denisos/exchange-rates#readme"
 }
