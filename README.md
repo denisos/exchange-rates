@@ -13,7 +13,7 @@ It's a simple currency exchange calculator built to demonstrate using redux with
 `yarn start` 
 
 
-# build notes
+### build notes
 using react-redux
 - `yarn add react react-redux`
 - create store, reducer and initial state
